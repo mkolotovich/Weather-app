@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card mt-1">
+    <div class="card-body">
+      <h1 class="card-title">Погода в {{location}}</h1>
+      <div class="d-flex align-items-center justify-content-evenly">
+        <img src="https://yastatic.net/weather/i/icons/funky/dark/{{icon}}.svg" class="card-img-top w-25" alt="{{conditionDictionary.get(condition)}}">
+        <p class="card-text fs-1">+{{temperature}}<span>&#176;</span></p>
+        <div>
+            <p class="card-text">{{condition}}</p>
+            <p class="card-text">Ощущается как +{{feels_like}}<span>&#176;</span></p>
+            <p class="card-text">{{wind_speed}}м/с</p>
+        </div>
+      </div>
+    </div>
+</div>
+<h2>Прогноз на неделю</h2>
+<div class="card-group">
+    {% for forecast in forecasts %}
+    <div class="card">
+      <img src="https://yastatic.net/weather/i/icons/funky/dark/{{forecast['parts']['day']['icon']}}.svg" class="card-img-top" alt="{{conditionDictionary.get(forecast['parts']['day']['condition'])}}">
+      <div class="card-body">
+        <h5 class="card-title">{{forecast['date']}}</h5>
+        <p class="card-text">+{{forecast['parts']['day']['temp_avg']}}<span>&#176;</span></p>
+        <p class="card-text">+{{forecast['parts']['night']['temp_avg']}}<span>&#176;</span></p>
+        <p class="card-text">{{conditionDictionary.get(forecast['parts']['day']['condition'])}}</p>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
